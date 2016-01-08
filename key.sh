@@ -1,8 +1,10 @@
 #!/bin/bash
-echo "Welcome to Key Cipher"
+clear
+echo "Welcome to Key Cipher Encryting/Decrypting Tool"
+echo
 echo -n "Please enter the key: "
 read key
-
+echo
 ##########DELETE REDUNDANT LETTER################
 act_key=$key
 for ((i=0;i<${#act_key};++i)); do
@@ -37,13 +39,20 @@ elif [ $choice = s ]; then
 	message=`cat $filename`
 fi
 
+echo
 echo -n "Do you want to encrypt or decrypt? (e/d) "
 read choice
 
 if [ $choice = e ]; then
+	echo -n "Your encrypted message is -> "
 	echo $message | tr '[:upper:]' '[:lower:]' | tr $P $C
 elif [ $choice = d ]; then
+	echo -n "Your decrypted message is -> "
 	echo $message | tr '[:upper:]' '[:lower:]' | tr $C $P
 else
 	echo "Invalid input. Goodbye!"
 fi
+
+echo
+echo "Thank you for using our tool!"
+echo
