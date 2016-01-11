@@ -3,6 +3,7 @@ clear
 echo "Welcome to Key Cipher Encryting/Decrypting Tool"
 echo
 echo -n "Please enter the key: "
+IFS=''
 read key
 echo
 ##########DELETE REDUNDANT LETTER################
@@ -14,7 +15,7 @@ for ((i=0;i<${#act_key};++i)); do
 done
 ########DELETE REDUNDANT LETTER END##############
 
-Ptext="${act_key}abcdefghijklmnopqrstuvwxyz" ###KEY + ABC...XYZ
+Ptext="${act_key}abcdefghijklmnopqrstuvwxyz ~!@#$%^&*()_\-+,./;'\[\]\{\\\}|\=\"\>\<\?" ###KEY + ABC...XYZ
 
 ########DELETE REDUNDANT LETTER (CIPHERTEXT) ############
 C=$Ptext
@@ -25,7 +26,7 @@ for ((i=0;i<${#C};++i)); do
 done
 #####DELETE REDUNDANT LETTER (CIPHERTEXT) END ###########
 
-P="abcdefghijklmnopqrstuvwxyz"
+P="abcdefghijklmnopqrstuvwxyz ~!@#$%^&*()_\-+,./;'\[\]\{\\\}|\=\"\>\<\?"
 
 echo -n "Do you want to type the message or select a file? (t for type/s for select) "
 read choice
@@ -39,6 +40,7 @@ done
 
 if [ $choice = t ]; then
 	echo -n "Please type your message: "
+	IFS=''
 	read message
 elif [ $choice = s ]; then
 	echo -n "Please enter your filename: "
