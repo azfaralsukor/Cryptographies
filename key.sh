@@ -1,4 +1,5 @@
 #!/bin/bash
+P="ABCDEFGHIJKLMNOPQRSTUVWXYZ ~!@#$%^&*()_+=[]\{}|;':,./<>?\"-abcdefghijklmnopqrstuvwxyz"
 clear
 echo "Welcome to Key Cipher Encryting/Decrypting Tool"
 echo
@@ -6,6 +7,7 @@ echo -n "Please enter the key: "
 IFS=''
 read key
 echo
+
 ##########DELETE REDUNDANT LETTER################
 act_key=$key
 for ((i=0;i<${#act_key};++i)); do
@@ -15,7 +17,7 @@ for ((i=0;i<${#act_key};++i)); do
 done
 ########DELETE REDUNDANT LETTER END##############
 
-Ptext="${act_key}abcdefghijklmnopqrstuvwxyz ~!@#$%^&*()_\-+,./;'\[\]\{\\\}|\=\"\>\<\?" ###KEY + ABC...XYZ
+Ptext="${act_key}ABCDEFGHIJKLMNOPQRSTUVWXYZ ~!@#$%^&*()_+=[]\{}|;':,./<>?\"-abcdefghijklmnopqrstuvwxyz" ###KEY + ABC...XYZ
 
 ########DELETE REDUNDANT LETTER (CIPHERTEXT) ############
 C=$Ptext
@@ -26,7 +28,6 @@ for ((i=0;i<${#C};++i)); do
 done
 #####DELETE REDUNDANT LETTER (CIPHERTEXT) END ###########
 
-P="abcdefghijklmnopqrstuvwxyz ~!@#$%^&*()_\-+,./;'\[\]\{\\\}|\=\"\>\<\?"
 
 echo -n "Do you want to type the message or select a file? (t for type/s for select) "
 read choice
@@ -66,10 +67,66 @@ done
 
 if [ $choice = e ]; then
 	echo -n "Your encrypted message is -> "
-	echo $message | tr '[:upper:]' '[:lower:]' | tr $P $C
+	echo $message | tr $P $C
+	message=`echo $message | tr $P $C`
 elif [ $choice = d ]; then
 	echo -n "Your decrypted message is -> "
-	echo $message | tr '[:upper:]' '[:lower:]' | tr $C $P
+	echo $message | tr $C $P
+	message=`echo $message | tr $C $P`
+fi
+
+echo -n "Do you want to save into a file? (y/n) "
+read choice
+choice=`echo $choice | tr '[:upper:]' '[:lower:]'`
+
+while [[ "$choice" != "y" && "$choice" != "n" ]]; do
+	echo -n "Wrong input, please re-enter. (y for yes/n for not) "
+	read choice
+	choice=`echo $choice | tr '[:upper:]' '[:lower:]'`
+done
+
+if [ $choice = y ]; then
+	echo -n "Do you want to save into an existing file or create new file? (e for existing/n for new) "
+	read choice
+	choice=`echo $choice | tr '[:upper:]' '[:lower:]'`
+
+	while [[ "$choice" != "e" && "$choice" != "n" ]]; do
+		echo -n "Wrong input, please re-enter. (e for existing/n for new) "
+		read choice
+		choice=`echo $choice | tr '[:upper:]' '[:lower:]'`
+	done
+
+	if [ $choice = e ]; then
+		echo -n "Please enter your exiting filename: "
+		IFS=''
+		read filename
+		while [ ! -f "$filename" ]; do
+			echo -n "File not found, please re-enter filename: "
+			read filename
+		done
+
+		echo -n "Do you want to overwrite or append this file? (o/a) "
+
+		read choice
+		choice=`echo $choice | tr '[:upper:]' '[:lower:]'`
+
+		while [[ "$choice" != "o" && "$choice" != "a" ]]; do
+			echo -n "Wrong input, please re-enter. (o for overwrite/a for append) "
+			read choice
+			choice=`echo $choice | tr '[:upper:]' '[:lower:]'`
+		done
+
+		if [ $choice = o ]; then
+			echo > $filename
+		fi
+
+	elif [ $choice = n ]; then
+		echo -n "Please enter your new filename: "
+		IFS=''
+		read filename
+	fi
+
+	echo $message > $filename
 fi
 
 echo
