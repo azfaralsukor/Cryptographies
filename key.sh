@@ -29,12 +29,19 @@ P="abcdefghijklmnopqrstuvwxyz"
 
 echo -n "Do you want to type the message or select a file? (t for type/s for select) "
 read choice
+choice=`echo $choice | tr '[:upper:]' '[:lower:]'`
+
+while [[ "$choice" != "t" && "$choice" != "s" ]]; do
+	echo -n "Wrong input, please re-enter. (t for type/s for select) "
+	read choice
+	choice=`echo $choice | tr '[:upper:]' '[:lower:]'`
+done
 
 if [ $choice = t ]; then
-	echo -n "Please enter message: "
+	echo -n "Please type your message: "
 	read message
 elif [ $choice = s ]; then
-	echo -n "Please enter filename: "
+	echo -n "Please enter your filename: "
 	IFS=''
 	read filename
 	while [ ! -f "$filename" ]; do
@@ -47,6 +54,13 @@ fi
 echo
 echo -n "Do you want to encrypt or decrypt? (e/d) "
 read choice
+choice=`echo $choice | tr '[:upper:]' '[:lower:]'`
+
+while [[ "$choice" != "e" && "$choice" != "d" ]]; do
+	echo -n "Wrong input, please re-enter. (e for encrypt/d for decrypt) "
+	read choice
+	choice=`echo $choice | tr '[:upper:]' '[:lower:]'`
+done
 
 if [ $choice = e ]; then
 	echo -n "Your encrypted message is -> "
@@ -54,8 +68,6 @@ if [ $choice = e ]; then
 elif [ $choice = d ]; then
 	echo -n "Your decrypted message is -> "
 	echo $message | tr '[:upper:]' '[:lower:]' | tr $C $P
-else
-	echo "Invalid input. Goodbye!"
 fi
 
 echo
