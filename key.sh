@@ -35,7 +35,12 @@ if [ $choice = t ]; then
 	read message
 elif [ $choice = s ]; then
 	echo -n "Please enter filename: "
+	IFS=''
 	read filename
+	while [ ! -f "$filename" ]; do
+		echo -n "File not found, please re-enter filename: "
+		read filename
+	done 
 	message=`cat $filename`
 fi
 
