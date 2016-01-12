@@ -1,5 +1,5 @@
 #!/bin/bash
-P="ABCDEFGHIJKLMNOPQRSTUVWXYZ ~!@#$%^&*()_+=[]\{}|;':,./<>?\"-abcdefghijklmnopqrstuvwxyz"
+P="ABCDEFGHIJKLMNOPQRSTUVWXYZ\' '~!@#$%^&*()_+=[]\{}|;':,./<>?\"-abcdefghijklmnopqrstuvwxyz"
 clear
 echo "Welcome to Key Cipher Encryting/Decrypting Tool"
 echo
@@ -8,25 +8,25 @@ IFS=''
 read key
 echo
 
-##########DELETE REDUNDANT LETTER################
+##########DELETING REDUNDANT LETTER FOR KEY################
 act_key=$key
 for ((i=0;i<${#act_key};++i)); do
     c=${act_key:i:1}
     tailact_key=${act_key:i+1}
     act_key=${act_key::i+1}${tailact_key//"$c"/}
 done
-########DELETE REDUNDANT LETTER END##############
+########DDELETING REDUNDANT LETTER FOR KEY END##############
 
-Ptext="${act_key}ABCDEFGHIJKLMNOPQRSTUVWXYZ ~!@#$%^&*()_+=[]\{}|;':,./<>?\"-abcdefghijklmnopqrstuvwxyz" ###KEY + ABC...XYZ
+Ptext="${act_key}ABCDEFGHIJKLMNOPQRSTUVWXYZ\' '~!@#$%^&*()_+=[]\{}|;':,./<>?\"-abcdefghijklmnopqrstuvwxyz" ###KEY + ABC...XYZ
 
-########DELETE REDUNDANT LETTER (CIPHERTEXT) ############
+########DELETING REDUNDANT LETTER FOR CIPHERTEXT ############
 C=$Ptext
 for ((i=0;i<${#C};++i)); do
     c=${C:i:1}
     tailC=${C:i+1}
     C=${C::i+1}${tailC//"$c"/}
 done
-#####DELETE REDUNDANT LETTER (CIPHERTEXT) END ###########
+#####DELETING REDUNDANT LETTER FOR CIPHERTEXT END ###########
 
 
 echo -n "Do you want to type the message or select a file? (t for type/s for select) "
@@ -44,11 +44,13 @@ if [ $choice = t ]; then
 	IFS=''
 	read message
 elif [ $choice = s ]; then
-	echo -n "Please enter your filename: "
+	echo "Please enter your filename. (format: \"/home/<username>/...\") "
+	echo -n "-> "
 	IFS=''
 	read filename
 	while [ ! -f "$filename" ]; do
-		echo -n "File not found, please re-enter filename: "
+		echo "File not found, please re-enter filename. (format: \"/home/<username>/...\") "
+		echo -n "-> "
 		read filename
 	done 
 	message=`cat $filename`
@@ -97,11 +99,13 @@ if [ $choice = y ]; then
 	done
 
 	if [ $choice = e ]; then
-		echo -n "Please enter your exiting filename: "
+		echo "Please enter your exiting filename. (format: \"/home/<username>/...\") "
+		echo -n "-> "
 		IFS=''
 		read filename
 		while [ ! -f "$filename" ]; do
-			echo -n "File not found, please re-enter filename: "
+			echo "File not found, please re-enter filename. (format: \"/home/<username>/...\") "
+			echo -n "-> "
 			read filename
 		done
 
@@ -121,7 +125,8 @@ if [ $choice = y ]; then
 		fi
 
 	elif [ $choice = n ]; then
-		echo -n "Please enter your new filename: "
+		echo "Please enter your new filename. (format: \"/home/<username>/...\") "
+		echo -n "-> "
 		IFS=''
 		read filename
 	fi
