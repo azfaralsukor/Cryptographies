@@ -18,7 +18,7 @@ mapChar2Int(){
 	input=`echo $1 | tr '[:lower:]' '[:upper:]'`
 	# od -t d1 --- converts letter to 1.octal bytes and 2.ASCII value
 	# awk '{printf "%s",$2}'; --- takes the $2(second) parameter only
-	# $((`...`))-65 --- converts string to int and maps it accordingly (see line no.5) 
+	# -65 (for alphabets) & -22 (for numbers) --- converts string to int and maps it accordingly (see line no.5) 
 	letter=`echo ${input}|od -t d1|awk '{printf "%s",$2}';`
 	if [[ $letter -gt 64 ]]; then
 		letter=$(($letter-65))
