@@ -6,3 +6,4 @@ This is the assignment for TSN 3251-Computer Security, Multimedia University Tri
 Usage:
 `bash _{filename}_.bash`
 
+_Added Hill Cipher encryption and decryption for Trimester 2 (2015/2016)._
